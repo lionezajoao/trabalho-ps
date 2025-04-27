@@ -1,0 +1,5 @@
+# Ignorar arquivos de backup do Visual Paradigm
+*.vpp.bak*
+
+# Ignorar arquivos de lock do Visual Paradigm
+*.vpp.lck
