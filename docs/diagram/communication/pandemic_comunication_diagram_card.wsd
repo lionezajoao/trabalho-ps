@@ -1,0 +1,21 @@
+' Descrição: Diagrama de comunicação para descartar uma carta do jogador
+@startuml DiagramaComunicacaoDescartarCarta
+participant Usuario
+participant Jogador
+participant CartaJogador
+participant BaralhoCartaJogador
+
+' Interações:
+Usuario -> Jogador : 1: realizarAcao("descartar", carta)
+Jogador -> CartaJogador : 2: verificarSePodeDescartar(carta)
+CartaJogador --> Jogador : 3: podeDescartar
+
+alt pode descartar
+    Jogador -> BaralhoCartaJogador : 4: descartar(carta)
+    BaralhoCartaJogador -> CartaJogador : 5: removerCarta(carta)
+    BaralhoCartaJogador --> Jogador : 6: confirmarDescartado()
+    Jogador -> Usuario : 7: mostrarSucesso("Carta descartada com sucesso")
+else
+    Jogador -> Usuario : 8: mostrarErro("Não é possível descartar esta carta")
+end
+@enduml
