@@ -1,0 +1,24 @@
+@startuml JogadorMoverCidade
+' CLASSES
+actor Usuario
+participant Jogador
+participant Cidade
+participant Tabuleiro
+
+' INTERAÇÕES
+Usuario -> Jogador : realizarAcao("mover", destino)
+
+Jogador -> Tabuleiro : obterCidadeAtual()
+Tabuleiro -> Jogador : cidadeAtual
+Jogador -> Cidade : estaConectadaCom(destino)
+Cidade --> Jogador : true/false
+
+alt cidade conectada
+    Jogador -> Tabuleiro : moverPara(destino)
+    Tabuleiro -> Cidade : atualizarLocalizacao(Jogador)
+    Cidade -> Jogador : confirmarMovimento()
+    Jogador -> Usuario : mostrarSucesso("Movido para " + destino.nome)
+else
+    Jogador -> Usuario : mostrarErro("Cidade não conectada")
+end
+@enduml

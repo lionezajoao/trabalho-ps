@@ -1,80 +1,154 @@
-# Pandemic (Trabalho de Programação de Software)
+# **Pandemic - Visão Geral do Projeto**
 
-Este projeto é uma implementação simplificada do jogo de tabuleiro Pandemic, utilizando Python 3.11 e a biblioteca gráfica `pygame` para visualização do tabuleiro e das ações dos jogadores.
+## **📌 Visão Geral do Jogo**
 
-## Estrutura do Projeto
+**Pandemic** é um jogo cooperativo onde os jogadores assumem papéis de especialistas em saúde tentando conter e curar quatro doenças que se espalham pelo mundo. O objetivo é descobrir as curas antes que ocorram **8 surtos**, as doenças se espalhem demais (falta de cubos) ou o tempo acabe (baralho de cartas esgotado).
 
-```
-app/
-  main.py
-  src/
-    board.py
-    city.py
-    graph_gui.py
-    player.py
-```
+### **🎯 Objetivo Principal**
 
-- `main.py`: Ponto de entrada do jogo, gerencia o loop principal, entrada dos jogadores e integração com a interface gráfica.
-- `src/board.py`: Lógica do tabuleiro, cidades, infecção e condições de vitória/derrota.
-- `src/city.py`: Representação das cidades, conexões e infecções.
-- `src/player.py`: Lógica dos jogadores e suas ações.
-- `src/graph_gui.py`: Interface gráfica usando `pygame`.
+-   **Descobrir curas para todas as 4 doenças** (Azul, Amarela, Preta e Vermelha).
+-   **Trabalhar em equipe**, utilizando habilidades especiais de cada personagem.
 
-## Requisitos
+### **⚔️ Condições de Derrota**
 
-- Python 3.11
-- [pygame](https://www.pygame.org/) >= 2.6.1
-- [uv](https://github.com/astral-sh/uv) (gerenciador de ambientes e dependências)
+1. **8 surtos ocorrerem** (marcador de surtos atinge o limite).
+2. **Acabarem os cubos de uma doença** (não é possível colocar mais cubos no tabuleiro).
+3. **O baralho de jogador acabar** (tempo esgotado).
 
-## Instalação e Execução
+---
 
-Este projeto recomenda o uso do [uv](https://github.com/astral-sh/uv) para instalar dependências e rodar o ambiente de forma rápida e eficiente.
+## **📋 Requisitos Funcionais**
 
-### Passos para rodar o projeto
+### **1. Gerenciamento do Tabuleiro e Componentes**
 
-1. **Instale o uv** (caso ainda não tenha):
+-   Representação das **48 cidades** e suas conexões.
+-   Controle de **cubos de doença** (máximo de 3 por cidade).
+-   Marcadores de **surtos, velocidade de infecção e curas**.
 
-   ```sh
-   pip install uv
-   ```
+### **2. Controle do Fluxo do Jogo**
 
-2. **Instale as dependências**:
+-   **Turnos** com 4 ações por jogador.
+-   **Fases**: Ações do jogador, compra de cartas e infecção de cidades.
+-   Verificação automática de **condições de vitória/derrota**.
 
-   ```sh
-   uv pip install -r pyproject.toml
-   ```
+### **3. Sistema de Movimento**
 
-   Ou, para instalar e criar o ambiente virtual automaticamente:
+-   **Movimentação de jogadores entre cidades** (viagens normais, voos diretos/fretados e ponte aérea).
 
-   ```sh
-   uv venv
-   uv pip install -r pyproject.toml
-   ```
+### **4. Limpeza de Cidades Infectadas**
 
-3. **Execute o jogo**:
+-   **Remoção de zumbis** em cidades infectadas.
 
-   ```sh
-   uv run app/main.py
-   ```
+### **5. Construção de Bases de Sobrevivência**
 
-   Ou, se estiver usando um ambiente virtual ativado:
+-   **Construção de bases** para facilitar o combate à infecção.
 
-   ```sh
-   python app/main.py
-   ```
+### **6. Compartilhamento de Cartas**
 
-## Sobre o uv
+-   **Troca de cartas** entre jogadores para facilitar a descoberta de curas.
 
-O [uv](https://github.com/astral-sh/uv) é um gerenciador de ambientes e dependências para Python, muito mais rápido que o pip tradicional. Ele facilita a criação de ambientes virtuais e a instalação de pacotes, tornando o setup do projeto mais ágil e confiável.
+### **7. Mecânica de Infecção e Surtos**
 
-**Recomendamos fortemente o uso do uv para garantir reprodutibilidade e velocidade na instalação das dependências.**
+-   **Espalhamento da infecção zumbi** com base na taxa de infecção atual.
+-   **Surtos em cadeia** (quando uma cidade com 3 cubos recebe mais um).
 
-## Como Jogar
+### **8. Fases de Epidemia**
 
-- O jogo é iniciado no terminal, onde você define o número de jogadores e seus nomes.
-- As ações dos jogadores são feitas pelo terminal, enquanto o estado do tabuleiro é exibido graficamente via pygame.
-- O objetivo é tratar todas as doenças antes que ocorram muitos surtos.
+-   **Epidemias** que aumentam a taxa de infecção e intensificam os surtos.
 
-## Licença
+### **9. Descoberta de Curas**
 
-Este projeto é apenas para fins educacionais.
+-   **5 cartas da mesma cor** (ou 4 para o Cientista) em um centro de pesquisa.
+-   **Doenças erradicadas** (se todos os cubos forem removidos após a cura).
+
+### **10. Habilidades Especiais dos Personagens**
+
+-   **Médico**: Remove todos os cubos de uma doença de uma cidade.
+-   **Pesquisadora**: Pode compartilhar qualquer carta de cidade.
+-   **Especialista em Operações**: Constrói centros de pesquisa sem descartar cartas.
+
+### **11. Gerenciamento de Cartas**
+
+-   **Baralho de Jogador** (cartas de cidade, evento e epidemia).
+-   **Baralho de Infecção** (cartas que determinam onde as doenças se espalham).
+
+### **12. Eventos Especiais**
+
+-   **Cartas de Evento** (ações extras como "Voo Charter" ou "Quarentena").
+
+---
+
+## **⚙️ Requisitos Não Funcionais**
+
+### **1. Interface de Usuário (UI)**
+
+-   **Intuitiva e responsiva**, com representação visual do tabuleiro e cartas.
+-   **Indicadores claros** de surtos, infecção e curas.
+
+### **2. Desempenho**
+
+-   **Processamento rápido** de ações e surtos em cadeia.
+-   **Salvamento de partida** para continuar depois.
+
+### **3. Regras e Validações**
+
+-   **Verificação automática** de ações inválidas (ex.: movimento impossível).
+-   **Feedback claro** sobre erros (ex.: "Não há cubos suficientes para um surto").
+
+### **4. Multiplayer**
+
+-   **Suporte a 2-4 jogadores** (local ou online).
+-   **Sistema de turnos** bem definido.
+
+### **5. Dificuldade Ajustável**
+
+-   **Níveis de dificuldade** (Iniciante, Padrão, Heróico) variando o número de cartas de Epidemia.
+
+
+## **📚 Documentação do Projeto**
+
+[Documentação](docs/START.md) de como instalar e jogar.
+
+---
+
+## **📜 README do Projeto**
+
+```markdown
+# 🦠 Pandemic - Jogo de Tabuleiro Digital
+
+**Desenvolvido por:** Carlos Eduardo, Erivelton Campos, Gabriel Pinho, João Pedro Barboza, Leonardo Lima, Pedro Mileipp  
+**Disciplina:** Projeto de Software  
+**Professor:** João Felipe Nicolaci
+
+## 🎮 Sobre o Jogo
+
+Pandemic é um jogo cooperativo onde os jogadores controlam especialistas em saúde tentando curar quatro doenças antes que elas causem um colapso global. O jogo requer estratégia, planejamento em equipe e gerenciamento de recursos.
+
+## 🛠️ Funcionalidades que serão implementadas
+
+✔️ **Movimentação de jogadores entre cidades**  
+✔️ **Limpeza de cidades infectadas (remoção de zumbis)**  
+✔️ **Construção de bases de sobrevivência**  
+✔️ **Compartilhamento de cartas entre jogadores**  
+✔️ **Mecanismo de espalhamento da infecção zumbi**  
+✔️ **Fases de epidemia e surtos**  
+✔️ **Verificação de condições de vitória ou derrota**
+
+## 📋 Requisitos
+
+-   Em desenvolvimento
+
+## 📊 Diagramas (Fase 1)
+
+-   **Diagrama de Classes** (Visual Paradigm)
+-   **Diagrama de Comunicação** (Turno básico)
+
+## 📅 Próximas Etapas
+
+-   Implementar **padrões GRASP/GoF** (Fase 2)
+-   Desenvolver **UI interativa** (Fase 3)
+-   Testes e balanceamento de regras
+
+## 👥 Contribuições
+
+-   Em desenvolvimento
