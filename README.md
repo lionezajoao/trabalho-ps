@@ -111,61 +111,44 @@
 
 ---
 
-## **🛠️ Implementações Iniciais**
+## **📜 README do Projeto**
 
-As seguintes funcionalidades já foram implementadas na primeira versão do projeto:
-
--   Movimentação de jogadores entre cidades.
--   Limpeza de cidades infectadas (remoção de zumbis).
--   Construção de bases de sobrevivência.
--   Compartilhamento de cartas entre jogadores.
--   Mecanismo de espalhamento da infecção zumbi.
--   Fases de epidemia e surtos.
--   Verificação de condições de vitória ou derrota.
-
----
-
-## **🏛️ Padrões de Projeto Utilizados**
-
-### **GRASP**
-
--   **Creator (Criador):** O padrão Creator recomenda que uma classe crie instâncias de objetos que ela contém ou usa fortemente. Isso é respeitado ao fazer a Partida conter e gerenciar a criação de: `Jogadores`, `Baralhos de cartas`, `Turnos` e `Tabuleiro`.
--   **Information Expert (Especialista da Informação):** As responsabilidades estão atribuídas às classes que possuem a informação necessária para executá-las. Por exemplo, `Cidade` manipula seus próprios cubos, o que é exatamente o objetivo deste padrão.
--   **Controller:** `Partida` atua como um controlador do sistema, coordenando a lógica principal do jogo, enquanto `Turno` gerencia as transições entre as fases, alinhado ao papel de controlador de um caso de uso.
--   **Polymorphism (Polimorfismo):** Permite que cada `Personagem` ou `Carta` implemente sua lógica específica, como `habilidadeEspecial()` ou `ativar()`, sem alterar o código do chamador.
--   **Low Coupling (Baixo Acoplamento):** Uso de enums (`CorDoenca`, `TipoCartaJogador`, etc.) reduz dependência entre objetos, e `Baralho<T>` é genérico e reutilizável.
--   **High Cohesion (Alta Coesão):** Cada classe possui responsabilidades bem definidas e focadas: `CartaEvento` trata exclusivamente eventos, `CartaEpidemia` lida apenas com a lógica de epidemia, `Turno` gerencia somente as fases do turno e `Cidade` é responsável pela manipulação das doenças em seu contexto.
-
-### **GoF**
-
--   **Strategy:** Permite definir uma família de algoritmos, encapsulá-los e torná-los intercambiáveis, facilitando a escolha dinâmica de comportamentos no jogo.  
-    No projeto, o método `habilidadeEspecial()` de `Personagem` pode receber diferentes estratégias de habilidade, permitindo que cada personagem tenha um comportamento especial distinto. Da mesma forma, o método `ativar()` em `CartaEvento` pode aplicar diferentes efeitos de forma intercambiável. Isso é possível ao utilizar interfaces como `IEfeitoEvento` ou `IHabilidade`, tornando fácil plugar novos comportamentos e estratégias conforme necessário.
-
----
-
-## **📊 Diagramas**
-
--   **Diagrama de Classes** ([Diagrama de Classes](./docs/diagram/class/pandemic_class_diagram.png))
--   **Diagrama de Comunicação** ([Diagrama de Comunicação - Mover](./docs/diagram/communication/pandemic_comunication_diagram_move.png))
--   **Diagrama de Sequência** ([Diagrama de Sequência - Mover](./docs/diagram/sequence/pandemic_sequence_diagram_move.png))
-
-> Foram elaborados diagramas de comunicação e de sequência para ilustrar o fluxo de mensagens e interações entre os objetos durante o turno básico do jogo, facilitando o entendimento da dinâmica entre as classes principais.
-
----
-
-## **📅 Próximas Etapas**
-
--   Desenvolver UI interativa (Fase 3)
--   Testes e balanceamento de regras
-
----
-
-## **👥 Contribuições**
-
--   Em desenvolvimento
-
----
+```markdown
+# 🦠 Pandemic - Jogo de Tabuleiro Digital
 
 **Desenvolvido por:** Carlos Eduardo, Erivelton Campos, Gabriel Pinho, João Pedro Barboza, Leonardo Lima, Pedro Mileipp  
 **Disciplina:** Projeto de Software  
 **Professor:** João Felipe Nicolaci
+
+## 🎮 Sobre o Jogo
+
+Pandemic é um jogo cooperativo onde os jogadores controlam especialistas em saúde tentando curar quatro doenças antes que elas causem um colapso global. O jogo requer estratégia, planejamento em equipe e gerenciamento de recursos.
+
+## 🛠️ Funcionalidades que serão implementadas
+
+✔️ **Movimentação de jogadores entre cidades**  
+✔️ **Limpeza de cidades infectadas (remoção de zumbis)**  
+✔️ **Construção de bases de sobrevivência**  
+✔️ **Compartilhamento de cartas entre jogadores**  
+✔️ **Mecanismo de espalhamento da infecção zumbi**  
+✔️ **Fases de epidemia e surtos**  
+✔️ **Verificação de condições de vitória ou derrota**
+
+## 📋 Requisitos
+
+-   Em desenvolvimento
+
+## 📊 Diagramas (Fase 1)
+
+-   **Diagrama de Classes** (Visual Paradigm)
+-   **Diagrama de Comunicação** (Turno básico)
+
+## 📅 Próximas Etapas
+
+-   Implementar **padrões GRASP/GoF** (Fase 2)
+-   Desenvolver **UI interativa** (Fase 3)
+-   Testes e balanceamento de regras
+
+## 👥 Contribuições
+
+-   Em desenvolvimento
