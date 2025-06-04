@@ -104,6 +104,11 @@
 
 -   **Níveis de dificuldade** (Iniciante, Padrão, Heróico) variando o número de cartas de Epidemia.
 
+
+## **📚 Documentação do Projeto**
+
+[Documentação](docs/START.md) de como instalar e jogar.
+
 ---
 
 ## **🛠️ Implementações Iniciais**

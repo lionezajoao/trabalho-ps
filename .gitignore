@@ -3,9 +3,5 @@
 
 # Ignorar arquivos de lock do Visual Paradigm
 *.vpp.lck
-
-# Ignorar arquivos de .venv Python
-*.venv/
-
-# Ignorar arquivos de cache do Visual Studio Code
-.vscode/
+.venv
+__pycache__/
