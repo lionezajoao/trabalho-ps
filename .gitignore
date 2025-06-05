@@ -5,3 +5,7 @@
 *.vpp.lck
 .venv
 __pycache__/
+
+# Build and distribution folders
+dist/
+build/
