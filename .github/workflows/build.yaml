@@ -30,10 +30,18 @@ jobs:
                   python -m pip install --upgrade pip
                   pip install pygame pyinstaller pytest
 
-            - name: Run tests
+            - name: Run tests (Linux/macOS)
+              if: runner.os != 'Windows'
               run: |
                   export PYTHONPATH=$PYTHONPATH:$(pwd)/app
                   pytest
+
+            - name: Run tests (Windows)
+              if: runner.os == 'Windows'
+              run: |
+                $env:PYTHONPATH="$env:PYTHONPATH;$(Get-Location)\app"
+                pytest
+              shell: pwsh
 
             - name: Build executable with PyInstaller
               run: |
