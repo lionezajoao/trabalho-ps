@@ -6,6 +6,9 @@ on:
     pull_request:
         branches: [main]
 
+env:
+    ACT: ""
+
 jobs:
     build:
         runs-on: ${{ matrix.os }}
@@ -28,13 +31,16 @@ jobs:
                   pip install pygame pyinstaller pytest
 
             - name: Run tests
-              run: pytest
+              run: |
+                  export PYTHONPATH=$PYTHONPATH:$(pwd)/app
+                  pytest
 
             - name: Build executable with PyInstaller
               run: |
                   pyinstaller --onefile --name Pandemic app/main.py
 
             - name: Upload artifact
+              if: ${{ env.ACT != 'true' }}
               uses: actions/upload-artifact@v4
               with:
                   name: pandemic-executable-${{ matrix.os }}
