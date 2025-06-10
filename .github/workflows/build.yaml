@@ -1,0 +1,49 @@
+name: Build Executable
+
+on:
+    push:
+        branches: [main]
+    pull_request:
+        branches: [main]
+
+env:
+    ACT: ""
+
+jobs:
+    build:
+        runs-on: ${{ matrix.os }}
+        strategy:
+            matrix:
+                os: [ubuntu-latest, windows-latest, macos-latest]
+
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name: Set up Python
+              uses: actions/setup-python@v5
+              with:
+                  python-version: "3.11"
+
+            - name: Install dependencies
+              run: |
+                  python -m pip install --upgrade pip
+                  pip install pygame pyinstaller pytest
+
+            - name: Run tests
+              run: |
+                  export PYTHONPATH=$PYTHONPATH:$(pwd)/app
+                  pytest
+
+            - name: Build executable with PyInstaller
+              run: |
+                  pyinstaller --onefile --name Pandemic app/main.py
+
+            - name: Upload artifact
+              if: ${{ env.ACT != 'true' }}
+              uses: actions/upload-artifact@v4
+              with:
+                  name: pandemic-executable-${{ matrix.os }}
+                  path: |
+                      dist/Pandemic*
+                      dist/Pandemic.exe
