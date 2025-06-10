@@ -104,7 +104,6 @@
 
 -   **Níveis de dificuldade** (Iniciante, Padrão, Heróico) variando o número de cartas de Epidemia.
 
-
 ## **📚 Documentação do Projeto**
 
 [Documentação](docs/START.md) de como instalar e jogar.
@@ -151,4 +150,10 @@ Pandemic é um jogo cooperativo onde os jogadores controlam especialistas em sa�
 
 ## 👥 Contribuições
 
--   Em desenvolvimento
+Para colaborar com este projeto, **todos os commits devem ser assinados** (GPG ou SSH).  
+Isso garante a autenticidade e segurança das contribuições.
+
+Veja como assinar seus commits na [documentação oficial do GitHub](https://docs.github.com/pt/authentication/managing-commit-signature-verification/signing-commits).
+
+Pull requests sem commits assinados não serão aceitos.
+```
