@@ -107,7 +107,7 @@
 
 ## **📚 Documentação do Projeto**
 
-[Documentação](docs/START.md) de como instalar e jogar.
+[Documentação](docs/start.md) de como instalar e jogar.
 
 ---
 
