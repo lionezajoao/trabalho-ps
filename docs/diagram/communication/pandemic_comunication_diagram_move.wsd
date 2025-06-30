@@ -1,21 +1,39 @@
-' Diagrama de Comunicação: Mover Jogador
+' Diagrama de Comunicação: Movimento do Jogador
 ' Descrição: Diagrama de comunicação para mover um jogador para uma cidade conectada
-@startuml DiagramaComunicacaoMover
-participant Usuario
-participant Jogador
-participant Cidade
-participant Tabuleiro
+@startuml DiagramaComunicacaoMoverJogador
+title Diagrama de Comunicação: Movimento do Jogador
 
-Usuario -> Jogador : 1: realizarAcao("mover", destino)
-Jogador -> Tabuleiro : 2: obterCidadeAtual()
-Jogador -> Cidade : 3: estaConectadaCom(destino)
-Cidade --> Jogador : 4: true/false
+left to right direction
 
-alt cidade conectada
-    Jogador -> Jogador : 5: localizacao = destino
-    Jogador -> Usuario : 6: mostrarSucesso("Movido para " + destino.nome)
-else
-    Jogador -> Usuario : 7: mostrarErro("Cidade não conectada")
-end
+rectangle Usuario
+rectangle Jogador
+rectangle Turno
+rectangle Tabuleiro
+rectangle "Cidade" as CidadeAtual
+rectangle Personagem
+rectangle Partida
+
+Usuario -> Jogador : 1. realizarAcao("mover", CidadeDestino)
+Jogador -> Turno : 2. verificarAcoesRestantes()
+Turno --> Jogador : 3. acoesRestantes > 0
+
+Jogador -> Tabuleiro : 4. obterCidadeAtual(Jogador)
+Tabuleiro --> Jogador : 5. CidadeAtual
+
+' Aqui indicamos o parâmetro CidadeDestino na mensagem
+Jogador -> CidadeAtual : 6. estaConectadaCom(CidadeDestino)
+CidadeAtual --> Jogador : 7. true/false
+
+Jogador -> Personagem : 8. usarHabilidade() [opcional]
+Personagem --> Jogador : 9. habilidadeExecutada [opcional]
+
+Jogador -> Turno : 11. decrementarAcoes()
+Jogador -> Partida : 12. verificarCondicoes()
+Partida --> Jogador : 13. StatusPartida
+
+note right of Jogador
+Se cidades não conectadas:
+Jogador -> Usuario : mostrarErro("Cidade não conectada")
+end note
 
 @enduml

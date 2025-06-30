@@ -63,6 +63,8 @@ class Turno {
   - jogadorAtual: Jogador
   - faseAtual: FaseTurno
   - acoesRestantes: int
+  + verificarAcoesRestantes(): int
+  + decrementarAcoes()
   + proximaFase()
 }
 
@@ -93,6 +95,7 @@ class Jogador {
   - mao: List<CartaJogador>
   - localizacao: Cidade
   + realizarAcao(acao: string, destino: Cidade)
+  + atualizarLocalizacao(destino: Cidade)
   + compartilharCarta(dest: Jogador, carta: CartaJogador)
   + construirBase()
 }
