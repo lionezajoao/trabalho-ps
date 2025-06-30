@@ -1,0 +1,27 @@
+@startuml PandemicDescartarCarta
+title Processo de Descarte de Carta do Jogador
+' Classes
+actor Jogador
+participant "Mão (List<CartaJogador>)" as Mao
+participant CartaJogador
+participant BaralhoCartaJogador as Baralho
+participant Partida
+
+Jogador -> Mao: selecionarCartaParaDescarte()
+Mao --> Jogador: cartaSelecionada
+
+Jogador -> Mao: remover(cartaSelecionada)
+Mao --> Jogador: (carta removida)
+
+Jogador -> Baralho: descartar(cartaSelecionada)
+activate Baralho
+Baralho -> Baralho: adicionarAoDescarte(cartaSelecionada)
+Baralho --> Jogador: (confirmação)
+deactivate Baralho
+
+Jogador -> Partida: notificarDescarte(cartaSelecionada) [opcional]
+activate Partida
+Partida --> Jogador: (atualiza estado) [opcional]
+deactivate Partida
+
+@enduml

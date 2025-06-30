@@ -1,24 +1,48 @@
 @startuml JogadorMoverCidade
-' CLASSES
-actor Usuario
-participant Jogador
-participant Cidade
-participant Tabuleiro
+title Processo de Movimento do Jogador
+'Classes
+actor Jogador as player
+participant "Jogador" as jogador
+participant "Personagem" as personagem
+participant "Tabuleiro" as tabuleiro
+participant "Cidade" as cidadeAtual
+participant "Cidade" as cidadeDestino
+participant "Partida" as partida
+participant "Turno" as turno
 
-' INTERAÇÕES
-Usuario -> Jogador : realizarAcao("mover", destino)
+player -> jogador: realizarAcao(\"mover\", cidadeDestino)
+activate jogador
 
-Jogador -> Tabuleiro : obterCidadeAtual()
-Tabuleiro -> Jogador : cidadeAtual
-Jogador -> Cidade : estaConectadaCom(destino)
-Cidade --> Jogador : true/false
+jogador -> turno: verificarAcoesRestantes()
+activate turno
+turno --> jogador: acoesRestantes > 0
+deactivate turno
 
-alt cidade conectada
-    Jogador -> Tabuleiro : moverPara(destino)
-    Tabuleiro -> Cidade : atualizarLocalizacao(Jogador)
-    Cidade -> Jogador : confirmarMovimento()
-    Jogador -> Usuario : mostrarSucesso("Movido para " + destino.nome)
-else
-    Jogador -> Usuario : mostrarErro("Cidade não conectada")
-end
+jogador -> tabuleiro: obterCidadeAtual(jogador)
+activate tabuleiro
+tabuleiro --> jogador: cidadeAtual
+deactivate tabuleiro
+
+jogador -> cidadeAtual: estaConectadaCom(cidadeDestino)
+activate cidadeAtual
+cidadeAtual --> jogador: true
+deactivate cidadeAtual
+
+jogador -> personagem: usarHabilidade() [opcional]
+activate personagem
+personagem --> jogador: habilidadeExecutada
+deactivate personagem
+
+jogador -> jogador: atualizarLocalizacao(cidadeDestino)
+jogador -> turno: decrementarAcoes()
+activate turno
+deactivate turno
+
+jogador -> partida: verificarCondicoes()
+activate partida
+partida --> jogador: StatusPartida.EM_ANDAMENTO
+deactivate partida
+
+jogador --> player: Movimento concluído
+deactivate jogador
 @enduml
