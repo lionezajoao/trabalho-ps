@@ -25,6 +25,7 @@ PURPLE = (160, 32, 240)
 ORANGE = (255, 140, 0)
 BLACK_DISEASE = (30, 30, 30)  # Doença preta
 CONNECTION_COLOR = (180, 180, 255)  # Azul claro para conexões
+RESEARCH_STATION_COLOR = (255, 255, 0)  # Amarelo para estações de pesquisa
 
 PLAYER_COLORS = [
     (255, 255, 255),  # Branco
