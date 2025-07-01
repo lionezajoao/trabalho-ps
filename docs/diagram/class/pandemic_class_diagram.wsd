@@ -51,8 +51,6 @@ class Partida {
   - jogadores: List<Jogador>
   - baralhoJogador: Baralho<CartaJogador>
   - baralhoInfeccao: Baralho<CartaInfeccao>
-  - descarteJogador: Stack<CartaJogador>
-  - descarteInfeccao: Stack<CartaInfeccao>
   - turnoAtual: Turno
   - tabuleiro: Tabuleiro
   + iniciar()
@@ -154,7 +152,6 @@ Carta <|-- CartaInfeccao
 CartaJogador <|-- CartaEvento
 CartaJogador <|-- CartaEpidemia
 
-' BARALHO COMO CLASSE GENERICA
 class Baralho<T> {
   - cartas: Stack<T>
   + embaralhar()
@@ -162,11 +159,21 @@ class Baralho<T> {
   + descartar(carta: T)
 }
 
+class GerenciadorDescarte {
+  - descarteJogador: Baralho<CartaJogador>
+  - descarteInfeccao: Baralho<CartaInfeccao>
+  + descartarJogador(carta: CartaJogador)
+  + descartarInfeccao(carta: CartaInfeccao)
+  + obterDescarteJogador(): Baralho<CartaJogador>
+  + obterDescarteInfeccao(): Baralho<CartaInfeccao>
+}
+
 ' RELAÇÕES COM CARDINALIDADES UML PADRÃO
 Partida "1" o-- "1" Tabuleiro
 Partida "1" o-- "2..4" Jogador
 Partida "1" o-- "1" Turno
 Partida "1" --> "1" StatusPartida
+Partida "1" o-- "1" GerenciadorDescarte
 
 Turno "1" --> "1" Jogador
 Turno "1" --> "1" FaseTurno
@@ -186,8 +193,7 @@ CartaInfeccao "1" --> "1" CorDoenca
 CartaJogador "1" --> "1" Cidade
 CartaJogador "1" --> "1" TipoCartaJogador
 
-Tabuleiro "1" *-- "1" Baralho<CartaJogador> : baralhoJogador
-Tabuleiro "1" *-- "1" Baralho<CartaInfeccao> : baralhoInfeccao
+Tabuleiro "1" *-- "1" Baralho
 
 Baralho "1" *-- "0..*" Carta : cartas
 
