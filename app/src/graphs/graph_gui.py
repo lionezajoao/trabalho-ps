@@ -2,7 +2,7 @@ import pygame
 
 # Inicialização do Pygame
 pygame.init()
-screen_width = 800
+screen_width = 1100
 screen_height = 600
 screen = pygame.display.set_mode((screen_width, screen_height))
 pygame.display.set_caption("Pandemic (Gráfico)")
@@ -13,17 +13,29 @@ FPS = 30 # Limitar a taxa de frames
 
 # Cores
 WHITE = (255, 255, 255)
-RED = (255, 0, 0)
-BLUE = (0, 0, 255)
-BLUE_DARK = (0, 0, 128) # Azul escuro
-YELLOW = (255, 255, 0)
 BLACK = (0, 0, 0)
-CITY_COLOR = (200, 200, 200)
-CONNECTION_COLOR = WHITE  # Conexões brancas
-PLAYER_COLORS = [(0, 255, 0), (255, 0, 0), (0, 0, 255), (255, 255, 0)] # Verde, Vermelho, Azul, Amarelo
-RESEARCH_STATION_COLOR = (0, 128, 255) # Azul mais claro
+GRAY = (200, 200, 200)
+DARK_GRAY = (40, 40, 40)
+BLUE_DARK = (10, 20, 60)  # Fundo do tabuleiro/menu
+RED = (220, 40, 40)       # Doença vermelha
+BLUE = (50, 120, 255)     # Doença azul
+YELLOW = (255, 215, 0)    # Doença amarela
+GREEN = (50, 205, 50)     # Para botões ativos
+CYAN = (0, 255, 255)
+PURPLE = (160, 32, 240)
+ORANGE = (255, 140, 0)
+BLACK_DISEASE = (30, 30, 30)  # Doença preta
+CONNECTION_COLOR = (180, 180, 255)  # Azul claro para conexões
 
-# Dicionário para mapear nomes de cidades para posições na tela
+PLAYER_COLORS = [
+    (255, 255, 255),  # Branco
+    (255, 0, 0),      # Vermelho
+    (0, 255, 0),      # Verde
+    (0, 128, 255),    # Azul claro
+    (255, 255, 0),    # Amarelo
+    (255, 0, 255),    # Magenta
+]
+
 city_positions = {
     # Azul (4)
     "Atlanta": (150, 250),
@@ -63,9 +75,9 @@ def get_disease_color(color):
     return (128, 128, 128) # Cinza para cores desconhecidas
 
 def draw_game(screen, board, current_player):
-    screen.fill(BLUE_DARK)  # Fundo azul escuro
+    screen.fill(BLUE_DARK)
 
-    # Desenhar conexões
+    # Conexões entre cidades
     for city_name, city in board.cities.items():
         pos1 = city_positions.get(city_name)
         if pos1:
@@ -74,13 +86,11 @@ def draw_game(screen, board, current_player):
                 if pos2:
                     pygame.draw.line(screen, CONNECTION_COLOR, pos1, pos2, 2)
 
-    # Desenhar cidades
+    # Cidades
     for city_name, city in board.cities.items():
         pos = city_positions.get(city_name)
         if pos:
-            # Cor do nó igual à cor da doença da cidade
             city_color_to_draw = get_disease_color(city.color)
-            # Destacar jogador
             if current_player and city == current_player.location:
                 city_color_to_draw = PLAYER_COLORS[board.players.index(current_player) % len(PLAYER_COLORS)]
             elif board.players:
@@ -90,39 +100,34 @@ def draw_game(screen, board, current_player):
                         break
 
             pygame.draw.circle(screen, city_color_to_draw, pos, 18)
-            
-            # Draw city name with background for better visibility
+
             if city_name in city_name_surfaces:
                 text_surface = city_name_surfaces[city_name]
                 text_rect = text_surface.get_rect(center=pos)
-                # Draw background rectangle
-                bg_rect = text_rect.inflate(10, 5)  # Make background slightly larger than text
+                bg_rect = text_rect.inflate(10, 5)
                 pygame.draw.rect(screen, BLUE_DARK, bg_rect)
                 screen.blit(text_surface, text_rect)
 
             y_offset = 20
             for color, level in city.infection_levels.items():
                 if level > 0:
-                    # Draw infection level with background for better visibility
                     infection_text = font.render(f"{color}: {level}", True, WHITE)
                     text_rect = infection_text.get_rect(topleft=(pos[0] - 30, pos[1] + y_offset))
-                    # Draw background rectangle
-                    bg_rect = text_rect.inflate(10, 5)  # Make background slightly larger than text
+                    bg_rect = text_rect.inflate(10, 5)
                     pygame.draw.rect(screen, BLUE_DARK, bg_rect)
                     screen.blit(infection_text, text_rect)
                     y_offset += 18
+
             if city.has_research_station:
                 pygame.draw.rect(screen, RESEARCH_STATION_COLOR, (pos[0] - 12, pos[1] - 30, 24, 8))
 
-    # Exibir informações do jogo
+    # Informações do jogo
     info_text = font.render(f"Surtos: {board.outbreak_count}", True, WHITE)
     screen.blit(info_text, (10, 10))
     if current_player:
         actions_text = font.render(f"Ações de {current_player.name}: {current_player.actions_left}", True, WHITE)
         screen.blit(actions_text, (10, 30))
 
-    pygame.display.flip()
-    clock.tick(FPS)
 
 def display_win_message(screen):
     win_text = large_font.render("Vitória!", True, BLUE_DARK)
