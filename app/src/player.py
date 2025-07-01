@@ -53,7 +53,7 @@ class Player:
         elif color is not None:
             print(f"Cor de doença inválida: {color}.")
         else:
-            print("Por favor, especifique uma cor para tratar.")
+            print("Por favor especifique uma cor para tratar.")
 
     def build_research_station(self):
         """
