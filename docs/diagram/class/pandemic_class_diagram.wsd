@@ -152,7 +152,6 @@ Carta <|-- CartaInfeccao
 CartaJogador <|-- CartaEvento
 CartaJogador <|-- CartaEpidemia
 
-' BARALHO COMO CLASSE GENERICA
 class Baralho<T> {
   - cartas: Stack<T>
   + embaralhar()
