@@ -1,6 +1,6 @@
 import sys
 import pygame
-from src.graphs.graph_gui import screen, draw_game, font, WHITE, BLUE_DARK
+from app.src.ui.graph_gui import screen, draw_game, font, WHITE, BLUE_DARK
 
 def game_screen(board, players, current_player_index):
     running = True

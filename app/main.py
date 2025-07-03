@@ -6,100 +6,131 @@
 import sys # Importa o módulo sys para sair do jogo
 import time
 import pygame
-from src.board import Board
-from src.player import Player
-from src.graphs.graph_gui import screen, draw_game, initialize_city_positions, display_win_message, display_lose_message, font, BLUE_DARK, WHITE
-from src.graphs.start_screen import tela_inicial
-from src.graphs.game_screen import game_screen
-
-# --- NOVO: Tela inicial visual ---
-def tela_inicial():
-    clock = pygame.time.Clock()
-    input_boxes = []
-    num_players = 2
-    player_names = ["" for _ in range(4)]
-    active_box = None
-    state = "choose_num_players"
-    selected_players = 2
-    start_button_rect = pygame.Rect(300, 500, 200, 50)
-    button_y = 160  # Posição Y dos botões (mais abaixo do texto)
-    button_spacing = 80  # Espaçamento horizontal entre os botões
-    
-    def draw():
-        screen.fill(BLUE_DARK)
-        title = font.render("Zomdemic - Escolha jogadores", True, WHITE)
-        screen.blit(title, (220, 40))
-        # Escolha número de jogadores
-        txt = font.render("Número de jogadores:", True, WHITE)
-        screen.blit(txt, (100, 120))
-        for i in range(1, 5):
-            color = (0,255,0) if i == selected_players else WHITE
-            pygame.draw.rect(screen, color, (100 + button_spacing*i, button_y, 50, 40), 2)
-            n_txt = font.render(str(i), True, color)
-            screen.blit(n_txt, (115 + button_spacing*i, button_y + 10))
-        # Campos de nome
-        for i in range(selected_players):
-            label = font.render(f"Nome do Jogador {i+1}:", True, WHITE)
-            screen.blit(label, (100, 250 + i*70))
-            box_rect = pygame.Rect(320, 245 + i*70, 250, 40)
-            pygame.draw.rect(screen, WHITE, box_rect, 2)
-            name_txt = font.render(player_names[i], True, WHITE)
-            screen.blit(name_txt, (330, 255 + i*70))
-            if active_box == i:
-                pygame.draw.rect(screen, (0,255,0), box_rect, 2)
-        # Botão iniciar
-        pygame.draw.rect(screen, (0,255,0), start_button_rect)
-        start_txt = font.render("Iniciar Jogo", True, BLUE_DARK)
-        screen.blit(start_txt, (start_button_rect.x+30, start_button_rect.y+10))
-        pygame.display.flip()
-
-    while True:
-        draw()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                pygame.quit()
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                mx, my = event.pos
-                # Selecionar número de jogadores
-                for i in range(1, 5):
-                    if 100 + button_spacing*i <= mx <= 150 + button_spacing*i and 160 <= my <= 200:
-                        selected_players = i
-                        if active_box is not None and active_box >= selected_players:
-                            active_box = None
-                # Selecionar campo de nome
-                for i in range(selected_players):
-                    if 320 <= mx <= 570 and 245 + i*70 <= my <= 285 + i*70:
-                        active_box = i
-                        break
-                else:
-                    active_box = None
-                # Botão iniciar
-                if start_button_rect.collidepoint(mx, my):
-                    if all(player_names[i].strip() for i in range(selected_players)):
-                        return selected_players, player_names[:selected_players]
-            if event.type == pygame.KEYDOWN and active_box is not None:
-                if event.key == pygame.K_BACKSPACE:
-                    player_names[active_box] = player_names[active_box][:-1]
-                elif event.key == pygame.K_RETURN:
-                    active_box = None
-                elif len(player_names[active_box]) < 16 and event.unicode.isprintable():
-                    player_names[active_box] += event.unicode
-        clock.tick(30)
+from app.src.classes.partida import Partida
+from app.src.classes.enums import StatusPartida
+from app.src.ui.graph_gui import screen, draw_game, initialize_city_positions, display_win_message, display_lose_message, font, BLUE_DARK, WHITE
+from app.src.ui.start_screen import tela_inicial
+from app.src.ui.game_screen import game_screen
 
 if __name__ == "__main__":
     while True:
         num_players, player_names = tela_inicial()
-        board = Board()
-        players = []
-        for i in range(num_players):
-            player = Player(player_names[i], board.get_city("Atlanta"))
-            players.append(player)
-            board.players.append(player)
+        
+        # Criar partida com os nomes dos jogadores
+        partida = Partida(player_names)
+        partida.iniciar()
+        
+        # Configurar interface gráfica (manter compatibilidade)
+        board = partida.tabuleiro  # Para compatibilidade com código gráfico existente
+        players = partida.jogadores  # Para compatibilidade com código gráfico existente
+        
+        # Adaptar os objetos para compatibilidade com a interface gráfica
+        for i, player in enumerate(players):
+            # Mapear novos atributos para os antigos
+            player.name = player.nome
+            player.location = player.localizacao
+            player.actions_left = partida.obter_acoes_restantes()
+            
+            # Criar funções de compatibilidade usando partial ou lambdas
+            def create_move_func(p, partida_ref):
+                def move(cidade):
+                    partida_ref.processar_turno_jogador("mover", destino=cidade)
+                    p.location = p.localizacao  # Atualizar referência
+                    p.actions_left = partida_ref.obter_acoes_restantes()
+                return move
+            
+            def create_treat_func(p, partida_ref):
+                def treat(cor_nome):
+                    from src.classes.enums import CorDoenca
+                    cor_map = {
+                        "vermelho": CorDoenca.VERMELHO,
+                        "azul": CorDoenca.AZUL, 
+                        "amarelo": CorDoenca.AMARELO,
+                        "preto": CorDoenca.PRETO
+                    }
+                    if cor_nome in cor_map:
+                        partida_ref.processar_turno_jogador("tratar", cor=cor_map[cor_nome])
+                        p.actions_left = partida_ref.obter_acoes_restantes()
+                return treat
+            
+            def create_build_func(p, partida_ref):
+                def build_research_station():
+                    partida_ref.processar_turno_jogador("construir")
+                    p.location.has_research_station = p.localizacao.tem_base
+                    p.actions_left = partida_ref.obter_acoes_restantes()
+                return build_research_station
+            
+            def create_reset_func(p, partida_ref):
+                def reset_actions():
+                    # Esta função será chamada mas o controle real está na partida
+                    p.actions_left = partida_ref.obter_acoes_restantes()
+                return reset_actions
+            
+            player.move = create_move_func(player, partida)
+            player.treat = create_treat_func(player, partida)
+            player.build_research_station = create_build_func(player, partida)
+            player.reset_actions = create_reset_func(player, partida)
+        
+        # Adaptar tabuleiro para compatibilidade
+        board.cities = {cidade.nome: cidade for cidade in board.cidades}
+        board.players = players
+        board.outbreak_count = board.marcador_surtos
+        board.infection_rate = board.taxa_infeccao
+        
+        # Adicionar método de infecção para compatibilidade
+        def infect_cities(rate):
+            board.espalhar_doenca()
+            # Atualizar infection_levels nas cidades após infecção
+            for cidade in board.cidades:
+                if cidade.cor in cidade.cubos_doenca:
+                    cidade.infection_levels[cidade.cor.value] = cidade.cubos_doenca[cidade.cor]
+        
+        board.infect_cities = infect_cities
+        
+        # Adaptar cidades para compatibilidade
+        for cidade in board.cidades:
+            cidade.name = cidade.nome
+            cidade.color = cidade.cor.value
+            cidade.connections = cidade.conexoes
+            cidade.has_research_station = cidade.tem_base
+            # Mapear cubos_doenca para infection_levels
+            cidade.infection_levels = {
+                "vermelho": cidade.cubos_doenca.get(cidade.cor, 0) if cidade.cor.value == "vermelho" else 0,
+                "azul": cidade.cubos_doenca.get(cidade.cor, 0) if cidade.cor.value == "azul" else 0,
+                "amarelo": cidade.cubos_doenca.get(cidade.cor, 0) if cidade.cor.value == "amarelo" else 0,
+                "preto": cidade.cubos_doenca.get(cidade.cor, 0) if cidade.cor.value == "preto" else 0,
+            }
+            # Corrigir infecção da própria cor da cidade
+            if cidade.cor in cidade.cubos_doenca:
+                cidade.infection_levels[cidade.cor.value] = cidade.cubos_doenca[cidade.cor]
+        
+        # Adicionar métodos de compatibilidade ao board
+        def get_city(name):
+            return board.cities.get(name)
+        
+        def check_win_prototype():
+            return board.verificar_vitoria_prototipo()
+        
+        def check_game_over():
+            return board.verificar_derrota_surtos()
+        
+        def check_victory():
+            return board.verificar_vitoria_completa()
+        
+        board.get_city = get_city
+        board.check_win_prototype = check_win_prototype
+        board.check_game_over = check_game_over
+        board.check_victory = check_victory
+        
+        # Adicionar referência à partida para as ações do jogo
+        board.partida = partida
+        
         initialize_city_positions(board)
-        current_player_index = 0
+        current_player_index = partida.indice_jogador_atual
+        
         # Chama a tela principal do jogo
         game_won, game_over = game_screen(board, players, current_player_index)
+        
         if game_won:
             display_win_message(screen)
             time.sleep(2)

@@ -1,6 +1,6 @@
 import random
 
-from src.city import City
+from app.src.city import City
 
 class Board:
     def __init__(self, num_players=2): # Podemos definir um padrão para num_players aqui
