@@ -55,3 +55,15 @@ jobs:
                   path: |
                       dist/Pandemic*
                       dist/Pandemic.exe
+
+            - name: Upload to GitHub Release
+              if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+              uses: softprops/action-gh-release@v1
+              with:
+                  name: "Release - ${{ matrix.os }}"
+                  tag_name: "latest-${{ matrix.os }}"
+                  files: |
+                      dist/Pandemic*
+                      dist/Pandemic.exe
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
