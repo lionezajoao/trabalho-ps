@@ -9,3 +9,8 @@ __pycache__/
 # Build and distribution folders
 dist/
 build/
+.vscode/
+
+# act configuration (local testing)
+.secrets
+.env.act

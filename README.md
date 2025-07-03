@@ -1,4 +1,10 @@
-# **Pandemic - Visão Geral do Projeto**
+# 🦠 Pandemic - Jogo de Tabuleiro Digital
+
+**Desenvolvido por:** Carlos Eduardo, Erivelton Campos, Gabriel Pinho, João Pedro Barboza, Leonardo Lima, Pedro Mileipp  
+**Disciplina:** Projeto de Software  
+**Professor:** João Felipe Nicolaci
+
+---
 
 ## **📌 Visão Geral do Jogo**
 
@@ -17,143 +23,255 @@
 
 ---
 
-## **📋 Requisitos Funcionais**
+## **� Como Executar**
 
-### **1. Gerenciamento do Tabuleiro e Componentes**
+### **Executar o Jogo**
 
--   Representação das **48 cidades** e suas conexões.
--   Controle de **cubos de doença** (máximo de 3 por cidade).
--   Marcadores de **surtos, velocidade de infecção e curas**.
+```bash
+cd /caminho/para/trabalho-ps
+python app/main.py
+```
+
+### **Executar Demonstração das Classes**
+
+```bash
+cd /caminho/para/trabalho-ps
+python demo_classes.py
+```
+
+### **📋 Requisitos**
+
+-   Python 3.11+
+-   Pygame
+-   Bibliotecas padrão do Python
+
+---
+
+## **🏗️ Arquitetura do Projeto**
+
+O projeto foi **completamente remodelado** seguindo um diagrama UML bem definido, implementando padrões de design robustos e uma arquitetura orientada a objetos.
+
+### **📊 Estrutura de Classes Implementada**
+
+```
+app/src/
+├── enums.py          # Enumerações do jogo
+├── habilidades.py    # Interface e implementações de habilidades
+├── cartas.py         # Hierarquia de cartas
+├── baralho.py        # Baralho genérico
+├── personagem.py     # Hierarquia de personagens
+├── city.py          # Classe Cidade
+├── player.py        # Classe Jogador
+├── turno.py         # Classe Turno
+├── board.py         # Classe Tabuleiro
+└── partida.py       # Classe Partida principal
+```
+
+### **🎭 Padrões de Design Implementados**
+
+1. **Strategy Pattern**: Sistema de habilidades especiais dos personagens
+2. **Template Method**: Classes abstratas para Carta e Personagem
+3. **Composition**: Relacionamentos entre classes seguindo UML
+4. **Generics**: Baralho type-safe que funciona com qualquer tipo de carta
+
+### **📚 Classes Principais**
+
+#### **Enums** (`src/enums.py`)
+
+-   `CorDoenca`: AZUL, AMARELO, PRETO, VERMELHO
+-   `StatusPartida`: EM_ANDAMENTO, VITORIA, DERROTA_SURTOS, etc.
+-   `FaseTurno`: ACOES, COMPRA, INFECCAO
+-   `TipoCartaJogador`: CIDADE, EVENTO, EPIDEMIA
+
+#### **Sistema de Habilidades** (`src/habilidades.py`)
+
+-   `IHabilidadeEspecial`: Interface Strategy
+-   `HabilidadeMedico`: Trata doenças mais eficientemente
+-   `HabilidadePesquisadora`: Compartilha cartas facilmente
+-   `HabilidadeCientista`: Precisa de menos cartas para curas
+-   `HabilidadeOperacoes`: Constrói bases sem cartas
+
+#### **Sistema de Cartas** (`src/cartas.py`)
+
+-   `Carta`: Classe abstrata base
+-   `CartaJogador`: Cartas do baralho do jogador
+-   `CartaInfeccao`: Cartas do baralho de infecção
+-   `CartaEvento`: Cartas de eventos especiais
+-   `CartaEpidemia`: Cartas de epidemia com lógica específica
+
+#### **Classes de Jogo**
+
+```python
+class Partida:
+    - status: StatusPartida
+    - jogadores: List[Jogador]
+    - turno_atual: Turno
+    - tabuleiro: Tabuleiro
+
+class Jogador:
+    - nome: str
+    - personagem: Personagem
+    - mao: List[CartaJogador]
+    - localizacao: Cidade
+
+class Tabuleiro:
+    - cidades: List[Cidade]
+    - taxa_infeccao: int
+    - marcador_surtos: int
+    - baralho_jogador: Baralho[CartaJogador]
+    - baralho_infeccao: Baralho[CartaInfeccao]
+```
+
+---
+
+## **📋 Funcionalidades Implementadas**
+
+✅ **Movimentação de jogadores entre cidades**  
+✅ **Tratamento de doenças (remoção de cubos)**  
+✅ **Construção de bases de pesquisa**  
+✅ **Compartilhamento de cartas entre jogadores**  
+✅ **Mecanismo de espalhamento da infecção**  
+✅ **Fases de epidemia e surtos em cadeia**  
+✅ **Verificação de condições de vitória/derrota**  
+✅ **Sistema de turnos com 4 ações por jogador**  
+✅ **Habilidades especiais dos personagens**  
+✅ **Interface gráfica com Pygame**
+
+---
+
+## **📋 Requisitos Funcionais Detalhados**
+
+### **1. Gerenciamento do Tabuleiro**
+
+-   Representação de **16 cidades** e suas conexões
+-   Controle de **cubos de doença** (máximo de 3 por cidade)
+-   Marcadores de **surtos, taxa de infecção e curas**
 
 ### **2. Controle do Fluxo do Jogo**
 
--   **Turnos** com 4 ações por jogador.
--   **Fases**: Ações do jogador, compra de cartas e infecção de cidades.
--   Verificação automática de **condições de vitória/derrota**.
+-   **Turnos** com 4 ações por jogador
+-   **Fases**: Ações do jogador, compra de cartas e infecção
+-   Verificação automática de **condições de vitória/derrota**
 
 ### **3. Sistema de Movimento**
 
--   **Movimentação de jogadores entre cidades** (viagens normais, voos diretos/fretados e ponte aérea).
+-   **Movimentação entre cidades conectadas**
+-   Validação de **movimentos válidos**
 
-### **4. Limpeza de Cidades Infectadas**
+### **4. Tratamento de Doenças**
 
--   **Remoção de zumbis** em cidades infectadas.
+-   **Remoção de cubos** de doença das cidades
+-   **Tratamento completo** em cidades com bases de pesquisa
 
-### **5. Construção de Bases de Sobrevivência**
+### **5. Construção de Bases**
 
--   **Construção de bases** para facilitar o combate à infecção.
+-   **Construção de bases de pesquisa** para facilitar o tratamento
 
-### **6. Compartilhamento de Cartas**
+### **6. Habilidades Especiais**
 
--   **Troca de cartas** entre jogadores para facilitar a descoberta de curas.
+-   **Médico**: Remove todos os cubos de uma doença
+-   **Pesquisadora**: Compartilha qualquer carta
+-   **Cientista**: Precisa de apenas 4 cartas para curas
+-   **Especialista em Operações**: Constrói bases sem cartas
 
-### **7. Mecânica de Infecção e Surtos**
+### **7. Mecânica de Epidemias**
 
--   **Espalhamento da infecção zumbi** com base na taxa de infecção atual.
--   **Surtos em cadeia** (quando uma cidade com 3 cubos recebe mais um).
-
-### **8. Fases de Epidemia**
-
--   **Epidemias** que aumentam a taxa de infecção e intensificam os surtos.
-
-### **9. Descoberta de Curas**
-
--   **5 cartas da mesma cor** (ou 4 para o Cientista) em um centro de pesquisa.
--   **Doenças erradicadas** (se todos os cubos forem removidos após a cura).
-
-### **10. Habilidades Especiais dos Personagens**
-
--   **Médico**: Remove todos os cubos de uma doença de uma cidade.
--   **Pesquisadora**: Pode compartilhar qualquer carta de cidade.
--   **Especialista em Operações**: Constrói centros de pesquisa sem descartar cartas.
-
-### **11. Gerenciamento de Cartas**
-
--   **Baralho de Jogador** (cartas de cidade, evento e epidemia).
--   **Baralho de Infecção** (cartas que determinam onde as doenças se espalham).
-
-### **12. Eventos Especiais**
-
--   **Cartas de Evento** (ações extras como "Voo Charter" ou "Quarentena").
+-   **Cartas de epidemia** que intensificam a infecção
+-   **Surtos em cadeia** quando cidades atingem limite
 
 ---
 
 ## **⚙️ Requisitos Não Funcionais**
 
-### **1. Interface de Usuário (UI)**
+### **1. Interface de Usuário**
 
--   **Intuitiva e responsiva**, com representação visual do tabuleiro e cartas.
--   **Indicadores claros** de surtos, infecção e curas.
+-   **Interface gráfica intuitiva** com Pygame
+-   **Indicadores visuais** de estado do jogo
+-   **Feedback claro** para ações do jogador
 
 ### **2. Desempenho**
 
--   **Processamento rápido** de ações e surtos em cadeia.
--   **Salvamento de partida** para continuar depois.
+-   **Processamento eficiente** de ações e surtos
+-   **Arquitetura modular** para fácil manutenção
 
-### **3. Regras e Validações**
+### **3. Multiplayer**
 
--   **Verificação automática** de ações inválidas (ex.: movimento impossível).
--   **Feedback claro** sobre erros (ex.: "Não há cubos suficientes para um surto").
+-   **Suporte a 2-4 jogadores** locais
+-   **Sistema de turnos** bem definido
 
-### **4. Multiplayer**
+### **4. Extensibilidade**
 
--   **Suporte a 2-4 jogadores** (local ou online).
--   **Sistema de turnos** bem definido.
-
-### **5. Dificuldade Ajustável**
-
--   **Níveis de dificuldade** (Iniciante, Padrão, Heróico) variando o número de cartas de Epidemia.
-
-## **📚 Documentação do Projeto**
-
-[Documentação](docs/start.md) de como instalar e jogar.
+-   **Arquitetura orientada a objetos** para fácil extensão
+-   **Padrões de design** para adicionar novas funcionalidades
 
 ---
 
-## **📜 README do Projeto**
+## **� Documentação Técnica**
 
-```markdown
-# 🦠 Pandemic - Jogo de Tabuleiro Digital
+### **Diagramas UML**
 
-**Desenvolvido por:** Carlos Eduardo, Erivelton Campos, Gabriel Pinho, João Pedro Barboza, Leonardo Lima, Pedro Mileipp  
-**Disciplina:** Projeto de Software  
-**Professor:** João Felipe Nicolaci
+-   **Diagrama de Classes** ([Ver diagrama](docs/diagram/class/pandemic_class_diagram.png))
+-   **Diagrama de Comunicação** ([Ver diagrama](docs/diagram/communication/))
+-   **Diagrama de Sequência** ([Ver diagrama](docs/diagram/sequence/))
 
-## 🎮 Sobre o Jogo
+### **Documentação Adicional**
 
-Pandemic é um jogo cooperativo onde os jogadores controlam especialistas em saúde tentando curar quatro doenças antes que elas causem um colapso global. O jogo requer estratégia, planejamento em equipe e gerenciamento de recursos.
+-   [Documentação de Instalação](docs/start.md)
+-   [Documentação de Remodelação](REFACTORING.md)
+-   [Demonstração das Classes](demo_classes.py)
 
-## 🛠️ Funcionalidades que serão implementadas
+---
 
-✔️ **Movimentação de jogadores entre cidades**  
-✔️ **Limpeza de cidades infectadas (remoção de zumbis)**  
-✔️ **Construção de bases de sobrevivência**  
-✔️ **Compartilhamento de cartas entre jogadores**  
-✔️ **Mecanismo de espalhamento da infecção zumbi**  
-✔️ **Fases de epidemia e surtos**  
-✔️ **Verificação de condições de vitória ou derrota**
+## **🔄 Benefícios da Remodelação**
 
-## 📋 Requisitos
+1. **Arquitetura Limpa**: Segue princípios SOLID
+2. **Extensibilidade**: Fácil adicionar novos personagens, cartas ou habilidades
+3. **Manutenibilidade**: Código organizado em classes específicas
+4. **Type Safety**: Uso de enums e tipos específicos
+5. **Testabilidade**: Classes isoladas e bem definidas
+6. **Compatibilidade**: Interface gráfica mantida funcionando
 
--   Em desenvolvimento
+---
 
-## 📊 Diagramas (Fase 1)
+## **📅 Roadmap do Projeto**
 
--   **Diagrama de Classes** (Visual Paradigm)
--   **Diagrama de Comunicação** (Turno básico)
+### **✅ Fase 1 - Concluída**
 
-## 📅 Próximas Etapas
+-   Implementação das classes base
+-   Diagrama de Classes UML
+-   Sistema básico de turnos
 
--   Implementar **padrões GRASP/GoF** (Fase 2)
--   Desenvolver **UI interativa** (Fase 3)
--   Testes e balanceamento de regras
+### **✅ Fase 2 - Concluída**
 
-## 👥 Contribuições
+-   Remodelação completa seguindo UML
+-   Implementação de padrões GRASP/GoF
+-   Sistema de habilidades com Strategy Pattern
+
+### **� Fase 3 - Em Desenvolvimento**
+
+-   Melhorias na UI interativa
+-   Implementação completa de cartas de evento
+-   Sistema de descoberta de curas
+
+### **� Próximas Etapas**
+
+-   Testes automatizados
+-   Balanceamento de regras
+-   Modo online/multiplayer
+
+---
+
+## **👥 Contribuições**
 
 Para colaborar com este projeto, **todos os commits devem ser assinados** (GPG ou SSH).  
 Isso garante a autenticidade e segurança das contribuições.
 
 Veja como assinar seus commits na [documentação oficial do GitHub](https://docs.github.com/pt/authentication/managing-commit-signature-verification/signing-commits).
 
-Pull requests sem commits assinados não serão aceitos.
-```
+**Pull requests sem commits assinados não serão aceitos.**
+
+---
+
+## **📄 Licença**
+
+Este projeto é desenvolvido para fins educacionais como parte da disciplina de Projeto de Software.
