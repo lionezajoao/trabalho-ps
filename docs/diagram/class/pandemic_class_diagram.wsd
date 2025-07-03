@@ -169,16 +169,16 @@ class GerenciadorDescarte {
 }
 
 ' RELAÇÕES COM CARDINALIDADES UML PADRÃO
-Partida "1" o-- "1" Tabuleiro
+Partida  o-- Tabuleiro
 Partida "1" o-- "2..4" Jogador
-Partida "1" o-- "1" Turno
+Partida  o--  Turno
 Partida "1" --> "1" StatusPartida
-Partida "1" o-- "1" GerenciadorDescarte
+Partida  o--  GerenciadorDescarte
 
 Turno "1" --> "1" Jogador
 Turno "1" --> "1" FaseTurno
 
-Tabuleiro "1" o-- "1..*" Cidade
+Tabuleiro "1" o-- "0..*" Cidade
 Cidade "1" --> "1..*" Cidade : cidadesConectadas
 
 Cidade "1" --> "1" CorDoenca
@@ -195,6 +195,8 @@ CartaJogador "1" --> "1" TipoCartaJogador
 
 Tabuleiro "1" -- "1" Baralho
 
+Baralho "1" *-- "0..*" Carta : cartas
+@enduml
 Baralho "1" *-- "0..*" Carta : cartas
 
 @enduml
