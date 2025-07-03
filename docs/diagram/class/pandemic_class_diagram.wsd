@@ -193,7 +193,7 @@ CartaInfeccao "1" --> "1" CorDoenca
 CartaJogador "1" --> "1" Cidade
 CartaJogador "1" --> "1" TipoCartaJogador
 
-Tabuleiro "1" *-- "1" Baralho
+Tabuleiro "1" -- "1" Baralho
 
 Baralho "1" *-- "0..*" Carta : cartas
 
