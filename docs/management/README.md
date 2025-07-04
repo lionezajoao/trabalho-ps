@@ -28,6 +28,7 @@ Esta pasta contém os artefatos de acompanhamento do projeto:
 -   [EVM Sprint 4](./evm/img/evm_relatorio_sprint_0004.jpg)
 -   [EVM Sprint 5](./evm/img/evm_relatorio_sprint_0005.jpg)
 -   [EVM Sprint 6](./evm/img/evm_relatorio_sprint_0006.jpg)
+-   [EVM Total](./evm/img/evm_relatorio_total.jpeg)
 
 ## Earned Value Management (EVM)
 
