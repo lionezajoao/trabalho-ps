@@ -1,0 +1,7 @@
+Sprint,Data_Fim,PV_Planned_Value,EV_Earned_Value,AC_Actual_Cost,CV_Cost_Variance,SV_Schedule_Variance,CPI_Cost_Performance,SPI_Schedule_Performance,Status_Performance
+Sprint 1,2025-04-22,20,25,25,0,-5,1.00,0.80,On Budget - Behind Schedule
+Sprint 2,2025-05-29,40,43,43,0,-3,1.00,0.93,On Budget - Slightly Behind Schedule
+Sprint 3,2025-06-05,60,65,65,0,-5,1.00,0.92,On Budget - Behind Schedule
+Sprint 4,2025-06-12,80,80,80,0,0,1.00,1.00,On Budget - On Schedule
+Sprint 5,2025-06-30,100,108,108,0,-8,1.00,0.93,On Budget - Behind Schedule
+Sprint 6,2025-07-03,120,120,120,0,0,1.00,1.00,On Budget - On Schedule
