@@ -1,0 +1,52 @@
+Commit_Hash,Data,Autor,Sprint,Categoria,Horas_Estimadas,Descricao
+93d681c,2025-04-16,João Pedro Barboza,1,setup,2,First commit
+e6c97e6,2025-04-16,Carlos Eduardo,1,docs,3,docs: Add initial project overview and functional requirements to README
+dff2b21,2025-04-22,João Pedro Barboza,1,merge,0,Merge pull request #1 from carlosecosmesilva/cadu
+3fa0188,2025-04-22,Carlos Eduardo,1,docs,6,Add class diagrams and documentation for pandemic project
+f903d2d,2025-04-22,João Pedro Barboza,1,merge,0,Merge pull request #2 from carlosecosmesilva/cadu
+ce6e680,2025-04-22,Carlos Eduardo,1,setup,2,feat: Add .gitignore to exclude Visual Paradigm backup and lock files
+ea8dc8d,2025-04-22,Carlos Eduardo,1,docs,4,docs: Update README to clarify game mechanics and enhance structure
+3b34d7c,2025-04-27,João Pedro Barboza,1,merge,0,Merge pull request #3 from carlosecosmesilva/cadu
+6e3ab9d,2025-05-28,Carlos Eduardo,2,feat,8,feat: Add sequence diagram for player movement in pandemic game
+7d28997,2025-05-29,João Pedro Barboza,2,merge,0,Merge pull request #4 from carlosecosmesilva/cadu
+3e3395a,2025-05-29,Carlos Eduardo,2,feat,8,feat: Implement initial game mechanics and board setup for Pandemic
+2c91113,2025-06-02,João Pedro Barboza,2,feat,2,feature: added v0 project
+e056acf,2025-06-02,João Pedro Barboza,3,merge,0,Merge branch 'main' of github.com:lionezajoao/trabalho-ps
+c4ba02e,2025-06-04,Carlos Eduardo,3,merge,0,Merge branch 'main' into cadu
+013170b,2025-06-04,Carlos Eduardo,3,fix,2,Revert changes in commit 3e3395a4f4a8752412d348cd293045b64ec5b67b
+5ef077b,2025-06-04,Carlos Eduardo,3,fix,3,fix: update LICENSE copyright name and enhance .gitignore for build artifacts
+11dc671,2025-06-04,João Pedro Barboza,3,merge,0,Merge pull request #6 from carlosecosmesilva/cadu
+35c9371,2025-06-04,Carlos Eduardo,3,feat,12,feat: implement game initialization and player selection screens with graphical interface
+8607520,2025-06-05,João Pedro Barboza,3,merge,0,Merge pull request #8 from carlosecosmesilva/cadu
+40e3795,2025-06-06,Carlos Eduardo,3,feat,10,feat: add GitHub Actions workflow for building executable and enhance player movement tests
+89683b0,2025-06-06,Carlos Eduardo,4,docs,5,feat: add project management and maintenance documentation
+e65a733,2025-06-09,Carlos Eduardo,4,feat,4,feat: enhance GitHub Actions workflow by adding environment variable and improving test execution
+6306131,2025-06-09,João Pedro Barboza,4,merge,0,Merge pull request #10 from carlosecosmesilva/cadu
+9d1e33c,2025-06-09,Carlos Eduardo,4,feat,6,feat: enhance GitHub Actions workflow to run tests on Windows and Linux/macOS separately; update PyInstaller spec for console output
+4e537d4,2025-06-10,Erivelton Campos,4,docs,2,docs: Diagrama com os padrões corretos
+79dda5e,2025-06-10,carlosecosmesilva,4,feat,1,feat: disable console output in executable configuration
+7ad9c91,2025-06-10,Leonardo Lima,4,fix,1,fix path documentation
+502f0ab,2025-06-10,João Pedro Barboza,4,merge,0,Merge pull request #12 from carlosecosmesilva/cadu
+2b008ca,2025-06-10,João Pedro Barboza,4,merge,0,Merge pull request #14 from lionezajoao/fix/path-documentation
+5e80ad7,2025-06-10,carlosecosmesilva,4,docs,1,docs: update contribution guidelines to require signed commits
+9252369,2025-06-10,João Pedro Barboza,4,merge,0,Merge pull request #15 from carlosecosmesilva/cadu
+c39c5d0,2025-06-29,carlosecosmesilva,5,feat,5,feat: Add sequence diagram for player card discard process
+493fc88,2025-06-30,carlosecosmesilva,5,feat,6,feat: update class diagram to include new attributes and methods for Tabuleiro; remove BaralhoCartaJogador and BaralhoCartaInfeccao classes
+7bdbdd4,2025-06-30,João Pedro Barboza,5,merge,0,Merge pull request #26 from carlosecosmesilva/cadu
+335b209,2025-06-30,João Pedro Barboza,5,merge,0,Merge pull request #13 from EriveltonSouzaCampos/erivelton
+7edfc59,2025-06-30,Carlos Eduardo,5,feat,8,feat: refactor game screen and GUI to enhance action menus and event logging; update screen dimensions
+f0ad1e8,2025-06-30,Carlos Eduardo,5,refactor,1,Remove redundant Pygame initialization comment
+8340368,2025-06-30,Carlos Eduardo,5,fix,2,fix: correct print statement for invalid disease color in treat method
+7d1cd22,2025-06-30,João Pedro Barboza,5,merge,0,Merge pull request #36 from carlosecosmesilva/cadu
+a3e62f3,2025-06-30,Carlos Eduardo,5,feat,3,feat: add research station color definition for improved visualization
+b4ba028,2025-06-30,Carlos Eduardo,5,feat,4,feat: introduce GerenciadorDescarte class and update Partida relationships for better card management
+89d3819,2025-06-30,Carlos Eduardo,5,refactor,2,refactor: remove redundant comment and define generic class for Baralho
+641aa2e,2025-07-01,João Pedro Barboza,5,merge,0,Merge pull request #37 from carlosecosmesilva/cadu
+23d8857,2025-07-03,carlosecosmesilva,6,feat,6,feat: Implement game UI and functionality
+8dc17aa,2025-07-03,carlosecosmesilva,6,docs,4,docs: Add documentation for testing GitHub Actions locally with act
+19fe2e8,2025-07-03,João Pedro Barboza,6,merge,0,Merge pull request #40 from carlosecosmesilva/main
+f0ae053,2025-07-03,carlosecosmesilva,6,refactor,2,refactor(diagram): change Tabuleiro-Baralho relationship from composition to association
+5354aef,2025-07-03,carlosecosmesilva,6,merge,0,Merge branch 'main' of https://github.com/carlosecosmesilva/trabalho-ps
+1a7d86c,2025-07-03,carlosecosmesilva,6,chore,1,chore: update pandemic class diagram image
+85b9ca7,2025-07-03,João Pedro Barboza,6,merge,0,Merge pull request #41 from carlosecosmesilva/feature/diagram-update
+5a56862,2025-07-03,Carlos Eduardo,6,merge,0,Merge branch 'lionezajoao:main' into main

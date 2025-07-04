@@ -1,0 +1,7 @@
+Sprint,Semana,Data_Inicio,Data_Fim,Horas_Planejadas,Horas_Trabalhadas,Horas_Restantes,Tarefas_Concluidas,Commits_Realizados,Descricao
+Sprint 1,1,2025-04-16,2025-04-22,20,25,95,"Documentação inicial, diagramas de classe",6,"First commit; docs: Add initial project overview; Add class diagrams; Add .gitignore; Update README structure"
+Sprint 2,2,2025-04-23,2025-05-29,20,18,77,"Diagramas de sequência, mecânicas iniciais",3,"Add sequence diagram for player movement; Implement initial game mechanics; feature: added v0 project"
+Sprint 3,3,2025-05-30,2025-06-05,20,22,55,"Interface gráfica, seleção de jogadores",4,"implement game initialization and player selection screens; add GitHub Actions workflow; enhance workflow tests"
+Sprint 4,4,2025-06-06,2025-06-12,20,15,40,"Documentação, correções, workflows",7,"add project management docs; enhance GitHub Actions; disable console output; fix path documentation; update contribution guidelines"
+Sprint 5,5,2025-06-13,2025-06-30,20,28,12,"Refatoração UI, gerenciamento de cartas",8,"refactor game screen and GUI; fix print statements; add research station color; introduce GerenciadorDescarte; remove redundant comments"
+Sprint 6,6,2025-07-01,2025-07-03,20,12,0,"Documentação testes, correções finais",6,"Implement game UI; Add documentation for testing with act; refactor diagram relationships; update class diagram image"

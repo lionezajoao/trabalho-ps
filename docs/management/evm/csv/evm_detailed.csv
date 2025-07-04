@@ -1,0 +1,7 @@
+Periodo,Data_Inicio,Data_Fim,Duracao_Planejada_Semanas,Duracao_Real_Semanas,PV_Planned_Value,EV_Earned_Value,AC_Actual_Cost,BAC_Budget_At_Completion,Percentual_Completo,CV_Cost_Variance,SV_Schedule_Variance,CPI_Cost_Performance,SPI_Schedule_Performance,ETC_Estimate_To_Complete,EAC_Estimate_At_Completion,TCPI_To_Complete_Performance,VAC_Variance_At_Completion
+Sprint 1,2025-04-16,2025-04-22,1,1,20,25,25,120,20.83%,0,-5,1.00,0.80,0,25,1.00,-5
+Sprint 2,2025-04-16,2025-05-29,2,6.14,40,43,43,120,35.83%,0,-3,1.00,0.93,0,43,1.00,-3
+Sprint 3,2025-04-16,2025-06-05,3,7.14,60,65,65,120,54.17%,0,-5,1.00,0.92,0,65,1.00,-5
+Sprint 4,2025-04-16,2025-06-12,4,8.14,80,80,80,120,66.67%,0,0,1.00,1.00,0,80,1.00,0
+Sprint 5,2025-04-16,2025-06-30,5,10.71,100,108,108,120,90.00%,0,-8,1.00,0.93,0,108,1.00,-8
+Sprint 6,2025-04-16,2025-07-03,6,11.14,120,120,120,120,100.00%,0,0,1.00,1.00,0,120,1.00,0
