@@ -49,8 +49,6 @@ IHabilidadeEspecial <|.. HabilidadeOperacoes
 class Partida {
   - status: StatusPartida
   - jogadores: List<Jogador>
-  - baralhoJogador: Baralho<CartaJogador>
-  - baralhoInfeccao: Baralho<CartaInfeccao>
   - turnoAtual: Turno
   - tabuleiro: Tabuleiro
   + iniciar()
@@ -73,27 +71,25 @@ class Tabuleiro {
   - curas: Map<CorDoenca, boolean>
   - pontoControle1: string
   - pontoControle2: string
-  - baralhoJogador: Baralho<CartaJogador>
-  - baralhoInfeccao: Baralho<CartaInfeccao>
   + espalharDoenca()
   + aplicarSurto()
   + obterCidadeAtual(jogador: Jogador): Cidade
   + moverJogador(jogador: Jogador, destino: Cidade)
   + tratarDoenca(jogador: Jogador)
   + construirBase(jogador: Jogador)
-  + acessarBaralhoJogador(): Baralho<CartaJogador>
-  + acessarBaralhoInfeccao(): Baralho<CartaInfeccao>
 }
 
 class Cidade {
   - nome: string
   - cor: CorDoenca
   - cubosDoenca: Map<CorDoenca, int>
-  - conexoes: List<Cidade>
+  - conexoesSaida: List<Cidade>
   - temBase: boolean
   + adicionarCubo(cor: CorDoenca)
   + removerCubo(cor: CorDoenca)
-  + estaConectadaCom(c: Cidade): boolean
+  + adicionarConexao(destino: Cidade)
+  + temConexaoPara(destino: Cidade): boolean
+  + obterConexoes(): List<Cidade>
 }
 
 ' JOGADOR E PERSONAGEM UTILIZANDO STRATEGY
@@ -152,51 +148,72 @@ Carta <|-- CartaInfeccao
 CartaJogador <|-- CartaEvento
 CartaJogador <|-- CartaEpidemia
 
-class Baralho<T> {
+' BARALHO GENÉRICO COM BIND
+class "Baralho<T>" as BaralhoGenerico {
   - cartas: Stack<T>
   + embaralhar()
   + sacar(): T
   + descartar(carta: T)
 }
 
+' CLASSES BOUND COM TIPOS ESPECÍFICOS
+class "Baralho<CartaJogador>" as BaralhoJogador {
+  - cartas: Stack<CartaJogador>
+  + embaralhar()
+  + sacar(): CartaJogador
+  + descartar(carta: CartaJogador)
+}
+
+class "Baralho<CartaInfeccao>" as BaralhoInfeccao {
+  - cartas: Stack<CartaInfeccao>
+  + embaralhar()
+  + sacar(): CartaInfeccao
+  + descartar(carta: CartaInfeccao)
+}
+
+' BIND RELATIONSHIPS
+BaralhoGenerico <|-- BaralhoJogador : <<bind>> (T -> CartaJogador)
+BaralhoGenerico <|-- BaralhoInfeccao : <<bind>> (T -> CartaInfeccao)
+
 class GerenciadorDescarte {
-  - descarteJogador: Baralho<CartaJogador>
-  - descarteInfeccao: Baralho<CartaInfeccao>
+  - descarteJogador: BaralhoJogador
+  - descarteInfeccao: BaralhoInfeccao
   + descartarJogador(carta: CartaJogador)
   + descartarInfeccao(carta: CartaInfeccao)
-  + obterDescarteJogador(): Baralho<CartaJogador>
-  + obterDescarteInfeccao(): Baralho<CartaInfeccao>
+  + obterDescarteJogador(): BaralhoJogador
+  + obterDescarteInfeccao(): BaralhoInfeccao
 }
 
 ' RELAÇÕES COM CARDINALIDADES UML PADRÃO
-Partida  o-- Tabuleiro
-Partida "1" o-- "2..4" Jogador
-Partida  o--  Turno
-Partida "1" --> "1" StatusPartida
-Partida  o--  GerenciadorDescarte
+Partida o-- Tabuleiro
+Partida o-- "2..4" Jogador
+Partida o-- Turno
+Partida --> StatusPartida
+Partida o-- GerenciadorDescarte
 
-Turno "1" --> "1" Jogador
-Turno "1" --> "1" FaseTurno
+Turno --> Jogador
+Turno --> FaseTurno
 
-Tabuleiro "1" o-- "0..*" Cidade
-Cidade "1" --> "1..*" Cidade : cidadesConectadas
+Tabuleiro o-- "0..*" Cidade
+Tabuleiro -- BaralhoJogador
+Tabuleiro -- BaralhoInfeccao
 
-Cidade "1" --> "1" CorDoenca
+' CONEXÕES ASSIMÉTRICAS ENTRE CIDADES (GRAFO DIRECIONADO)
+Cidade --> "0..*" Cidade : conexoesSaida
 
-Jogador "1" --> "1" Personagem
-Jogador "1" --> "1" Cidade
-Jogador "1" --> "0..7" CartaJogador
+Cidade --> CorDoenca
 
-CartaInfeccao "1" --> "1" Cidade
-CartaInfeccao "1" --> "1" CorDoenca
+Jogador --> Personagem
+Jogador --> Cidade
+Jogador --> "0..7" CartaJogador
 
-CartaJogador "1" --> "1" Cidade
-CartaJogador "1" --> "1" TipoCartaJogador
+CartaInfeccao --> Cidade
+CartaInfeccao --> CorDoenca
 
-Tabuleiro "1" -- "1" Baralho
+CartaJogador --> Cidade
+CartaJogador --> TipoCartaJogador
 
-Baralho "1" *-- "0..*" Carta : cartas
-@enduml
-Baralho "1" *-- "0..*" Carta : cartas
+BaralhoJogador *-- "0..*" CartaJogador : cartas
+BaralhoInfeccao *-- "0..*" CartaInfeccao : cartas
 
 @enduml
