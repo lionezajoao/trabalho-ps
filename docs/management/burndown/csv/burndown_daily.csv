@@ -1,32 +1,32 @@
-Data,Sprint,Dia_Sprint,Horas_Ideais_Restantes,Horas_Reais_Restantes,Horas_Trabalhadas_Dia,Commits_Dia,Tarefas_Concluidas_Dia
-2025-04-16,1,1,120,120,8,2,First commit + README inicial
-2025-04-17,1,2,116,112,8,0,Planejamento e documentação
-2025-04-18,1,3,112,104,8,0,Análise de requisitos
-2025-04-19,1,4,108,96,8,0,Design inicial
-2025-04-20,1,5,104,96,0,0,Revisão
-2025-04-21,1,6,100,96,0,0,Preparação para merge
-2025-04-22,1,7,96,95,1,4,Diagramas de classe e estrutura
-2025-04-23,2,1,96,95,0,0,Início Sprint 2
-2025-04-24,2,2,92,95,0,0,Análise de mecânicas
-2025-04-25,2,3,88,95,0,0,Design de gameplay
-2025-04-26,2,4,84,95,0,0,Documentação técnica
-2025-04-27,2,5,80,95,0,1,Merge documentation
-2025-05-28,2,6,76,80,15,1,Diagrama de sequência
-2025-05-29,2,7,72,77,3,2,Implementação inicial + merge
-2025-05-30,3,1,72,77,0,0,Início Sprint 3
-2025-06-02,3,2,68,75,2,2,Projeto v0 + merge
-2025-06-04,3,3,64,65,10,5,Interface gráfica e correções
-2025-06-05,3,4,60,55,10,2,Workflow GitHub Actions
-2025-06-06,3,5,56,40,15,2,Testes e documentação
-2025-06-07,4,1,52,40,0,0,Início Sprint 4
-2025-06-09,4,2,48,30,10,3,Melhorias workflow e testes
-2025-06-10,4,3,44,25,5,4,Documentação e correções
-2025-06-11,4,4,40,25,0,0,Revisão
-2025-06-12,4,5,36,25,0,0,Preparação próximo sprint
-2025-06-13,5,1,32,25,0,0,Início Sprint 5
-2025-06-29,5,2,28,20,5,1,Diagrama de descarte
-2025-06-30,5,3,24,12,8,7,Refatoração UI e classes
-2025-07-01,5,4,20,8,4,1,Merge e correções
-2025-07-02,6,1,16,8,0,0,Início Sprint 6
-2025-07-03,6,2,12,0,8,6,Documentação final e correções
-2025-07-03,6,3,8,0,4,0,Finalização projeto
+Data,Sprint,Dia_Sprint,Horas_Ideais_Restantes,Horas_Reais_Restantes,Horas_Trabalhadas_Dia,Commits_Dia,Tarefas_Concluidas_Dia,Horas_Ideais_Consumidas,Horas_Reais_Consumidas
+2025-04-16,1,1,120,120,8,2,First commit + README inicial,0,0
+2025-04-17,1,2,115.8333333,112,8,0,Planejamento e documentaÃÂ§ÃÂ£o,4.166666667,8
+2025-04-18,1,3,111.6666667,104,8,0,AnÃÂ¡lise de requisitos,8.333333333,16
+2025-04-19,1,4,107.5,96,8,0,Design inicial,12.5,24
+2025-04-20,1,5,103.3333333,96,0,0,RevisÃÂ£o,16.66666667,24
+2025-04-21,1,6,99.16666667,96,0,0,PreparaÃÂ§ÃÂ£o para merge,20.83333333,24
+2025-04-22,1,7,95,95,1,4,Diagramas de classe e estrutura,25,25
+2025-04-23,2,1,95,95,0,0,InÃÂ­cio Sprint 2,0,0
+2025-04-24,2,2,92,95,0,0,AnÃÂ¡lise de mecÃÂ¢nicas,3,0
+2025-04-25,2,3,89,95,0,0,Design de gameplay,6,0
+2025-04-26,2,4,86,95,0,0,DocumentaÃÂ§ÃÂ£o tÃÂ©cnica,9,0
+2025-04-27,2,5,83,95,0,1,Merge documentation,12,0
+2025-05-28,2,6,80,80,15,1,Diagrama de sequÃÂªncia,15,15
+2025-05-29,2,7,77,77,3,2,ImplementaÃÂ§ÃÂ£o inicial + merge,18,18
+2025-05-30,3,1,77,77,0,0,InÃÂ­cio Sprint 3,0,0
+2025-06-02,3,2,67.75,75,2,2,Projeto v0 + merge,9.25,2
+2025-06-04,3,3,58.5,65,10,5,Interface grÃÂ¡fica e correÃÂ§ÃÂµes,18.5,12
+2025-06-05,3,4,49.25,55,10,2,Workflow GitHub Actions,27.75,22
+2025-06-06,3,5,40,40,15,2,Testes e documentaÃÂ§ÃÂ£o,37,37
+2025-06-07,4,1,40,40,0,0,InÃÂ­cio Sprint 4,0,0
+2025-06-09,4,2,36.25,30,10,3,Melhorias workflow e testes,3.75,10
+2025-06-10,4,3,32.5,25,5,4,DocumentaÃÂ§ÃÂ£o e correÃÂ§ÃÂµes,7.5,15
+2025-06-11,4,4,28.75,25,0,0,RevisÃÂ£o,11.25,15
+2025-06-12,4,5,25,25,0,0,PreparaÃÂ§ÃÂ£o prÃÂ³ximo sprint,15,15
+2025-06-13,5,1,25,25,0,0,InÃÂ­cio Sprint 5,0,0
+2025-06-29,5,2,19.33333333,20,5,1,Diagrama de descarte,5.666666667,5
+2025-06-30,5,3,13.66666667,12,8,7,RefatoraÃÂ§ÃÂ£o UI e classes,11.33333333,13
+2025-07-01,5,4,8,8,4,1,Merge e correÃÂ§ÃÂµes,17,17
+2025-07-02,6,1,8,8,0,0,InÃÂ­cio Sprint 6,0,0
+2025-07-03,6,2,4,0,8,6,DocumentaÃÂ§ÃÂ£o final e correÃÂ§ÃÂµes,4,8
+2025-07-03,6,3,0,0,4,0,FinalizaÃÂ§ÃÂ£o projeto,8,8
