@@ -4,8 +4,6 @@ on:
         branches: [main]
     pull_request:
         branches: [main]
-env:
-    ACT: ""
 permissions:
     contents: write
 jobs:
@@ -50,7 +48,6 @@ jobs:
                   fi
               shell: bash
             - name: Upload artifact
-              if: ${{ env.ACT != 'true' }}
               uses: actions/upload-artifact@v4
               with:
                   name: pandemic-executable-${{ matrix.os }}
@@ -61,10 +58,24 @@ jobs:
         runs-on: ubuntu-latest
         if: github.ref == 'refs/heads/main' && github.event_name == 'push'
         steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
             - name: Download all artifacts
               uses: actions/download-artifact@v4
               with:
                   path: artifacts
+            - name: List downloaded artifacts (debug)
+              run: |
+                  echo "Estrutura dos artifacts baixados:"
+                  find artifacts -type f -name "*" | head -20
+                  echo "Conteúdo detalhado:"
+                  ls -la artifacts/*/
+            - name: Prepare release files
+              run: |
+                  mkdir -p release-files
+                  find artifacts -name "Pandemic*" -type f -exec cp {} release-files/ \;
+                  echo "Arquivos preparados para release:"
+                  ls -la release-files/
             - name: Delete existing release
               run: |
                   gh release delete latest --yes || true
@@ -77,8 +88,7 @@ jobs:
               with:
                   name: "Latest Release"
                   tag_name: "latest"
-                  files: |
-                      artifacts/**/*
+                  files: release-files/*
                   body: |
                       Executáveis atualizados automaticamente a partir do commit: ${{ github.sha }}
                       
